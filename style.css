@@ -1,0 +1,57 @@
+:root {
+    --background-color: rgb(219, 211, 211);
+    --grid-color: rgb(70, 69, 69);
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background: var(--background-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: sans-serif;
+}
+
+.buttons {
+    border: 2px solid red;
+   
+}
+
+
+.set-new-grid input {
+}
+
+.button {
+}
+
+.container {
+    margin: 20px;
+    width: min(90vh, 70vw);
+    height: min(90vh, 70vw);
+    background: white;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--grid-color);
+    border-right: 1px solid var(--grid-color);
+}
+
+div[data-row] {
+    flex: 1;
+    display: flex;
+}
+
+div[data-col] {
+    flex: 1;
+    border-left: 1px solid var(--grid-color);
+    border-top: 1px solid var(--grid-color);
+}
