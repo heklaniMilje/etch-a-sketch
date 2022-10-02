@@ -1,12 +1,11 @@
 const container = document.querySelector('.container');
-let cells = Array.from(document.querySelectorAll('[data-col]'));
-const setNewGrid = document.querySelector('.dimension-slider');
-console.log(setNewGrid);
-const resetBtn = document.querySelector('.reset');
 const colorSelection = document.querySelector(`[name="color-selection"]`);
+const randomBtn = document.querySelector('.random');
 const eraserBtn = document.querySelector('.eraser');
-console.log(eraserBtn);
+const resetBtn = document.querySelector('.reset');
+const setNewGrid = document.querySelector('.dimension-slider');
 
+let cells = Array.from(document.querySelectorAll('[data-col]'));
 let mouseDown = false;
 let colorSingleMode = false;
 let colorEraseMode = false;
@@ -16,15 +15,22 @@ addEventListener('load', setGridWithDimension);
 document.addEventListener('mousedown', () => mouseDown = true);
 document.addEventListener('mouseup', () => mouseDown = false);
 
-setNewGrid.addEventListener('input', setGridWithDimension);
-resetBtn.addEventListener('click', resetGrid);
-eraserBtn.addEventListener('click', whiteColorSelection);
 colorSelection.addEventListener('input', singleColorSelection);
+randomBtn.addEventListener('click', randomColorSelection);
+eraserBtn.addEventListener('click', whiteColorSelection);
+resetBtn.addEventListener('click', resetGrid);
+setNewGrid.addEventListener('input', setGridWithDimension);
+
 
 function hexToRgb(hex) {
     let arrHex = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     let arrRGB = [parseInt(arrHex[1], 16), parseInt(arrHex[2], 16), parseInt(arrHex[3], 16)];
     return arrRGB;
+}
+
+function randomColorSelection(){
+    colorEraseMode = false;
+    colorSingleMode = false;
 }
 
 function singleColorSelection(e) {
