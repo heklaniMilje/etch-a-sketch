@@ -1,5 +1,6 @@
 const container = document.querySelector('.container');
 const colorSelection = document.querySelector(`[name="color-selection"]`);
+const colorSelectionBtn = document.querySelector('.color');
 const randomBtn = document.querySelector('.random');
 const eraserBtn = document.querySelector('.eraser');
 const resetBtn = document.querySelector('.reset');
@@ -16,6 +17,7 @@ document.addEventListener('mousedown', () => mouseDown = true);
 document.addEventListener('mouseup', () => mouseDown = false);
 
 colorSelection.addEventListener('input', singleColorSelection);
+colorSelectionBtn.addEventListener('click', singleColorSelection);
 randomBtn.addEventListener('click', randomColorSelection);
 eraserBtn.addEventListener('click', whiteColorSelection);
 resetBtn.addEventListener('click', resetGrid);
@@ -34,7 +36,7 @@ function randomColorSelection(){
 }
 
 function singleColorSelection(e) {
-    selectedColor = hexToRgb(this.value);
+    selectedColor = hexToRgb(colorSelection.value);
     colorSingleMode = true;
     colorEraseMode = false;
 }
