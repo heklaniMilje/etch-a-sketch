@@ -1,6 +1,7 @@
 const container = document.querySelector('.container');
 let cells = Array.from(document.querySelectorAll('[data-col]'));
-const setNewGrid = document.querySelector('.set-new-grid');
+const setNewGrid = document.querySelector('.dimension-slider');
+console.log(setNewGrid);
 const resetBtn = document.querySelector('.reset');
 const colorSelection = document.querySelector(`[name="color-selection"]`);
 const eraserBtn = document.querySelector('.eraser');
@@ -15,7 +16,7 @@ addEventListener('load', setGridWithDimension);
 document.addEventListener('mousedown', () => mouseDown = true);
 document.addEventListener('mouseup', () => mouseDown = false);
 
-setNewGrid.addEventListener('submit', setGridWithDimension);
+setNewGrid.addEventListener('input', setGridWithDimension);
 resetBtn.addEventListener('click', resetGrid);
 eraserBtn.addEventListener('click', whiteColorSelection);
 colorSelection.addEventListener('input', singleColorSelection);
@@ -49,7 +50,7 @@ function setGridWithDimension(e) {
     if (e.type == 'load')
         newDimension = 16;
     else {
-        const newDimensionStr = this.querySelector('[name=grid-dimension').value;
+        const newDimensionStr = this.value;
         if (checkDimensionConstraints(newDimensionStr)) {
             newDimension = parseInt(newDimensionStr);
             Array.from(container.childNodes).forEach(node => node.remove());
