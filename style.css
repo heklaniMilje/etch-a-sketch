@@ -1,13 +1,17 @@
 :root {
     --background-color: rgb(219, 211, 211);
     --grid-color: rgb(70, 69, 69);
+    --background-options: rgb(148, 141, 141);
+    --options-shadow: rgba(73, 70, 70, 0.726);
 }
 
 html {
     box-sizing: border-box;
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
     box-sizing: inherit;
 }
 
@@ -17,21 +21,62 @@ body {
     height: 100vh;
     background: var(--background-color);
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     font-family: sans-serif;
+    position: relative;
 }
 
 .buttons {
-    border: 2px solid red;
-   
+    height: 100%;
+    width: 20vw;
+    /* border: 2px solid rgb(43, 38, 38); */
+    background: var(--background-options);
+    border-radius: 2%;
+    box-shadow: 0 10px 5px var(--options-shadow);
+    position: absolute;
+    left: 0;
+    transform: translateX(-90%);
+    transition: all .3s;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px
 }
 
+.buttons:hover {
+    transform: translateX(0);
+}
 
-.set-new-grid input {
+.buttons input[name=color-selection] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 160px;
+    height: 160px;
+    box-shadow: 3px 3px 6px white, -3px -3px 6px white;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    cursor: pointer;
 }
 
 .button {
+    width: 80%;
+    height: 6%;
+    background: var(--options-shadow);
+    border: 0;
+    outline: 0;
+    box-shadow: 3px 3px 6px white, -3px -3px 6px white;
+    color: white;
+    font-size: 20px;
+    letter-spacing: 0.4rem;
+}
+
+.dimension-slider {
+    width: 80%;
 }
 
 .container {
@@ -44,6 +89,7 @@ body {
     border-bottom: 1px solid var(--grid-color);
     border-right: 1px solid var(--grid-color);
 }
+
 
 div[data-row] {
     flex: 1;

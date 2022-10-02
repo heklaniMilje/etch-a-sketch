@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Etch-a-sketch</title>
-        <link rel="stylesheet" href="./style.css">
-        <script src="./script.js" defer></script>
-    </head>
-    <body>
-        <div class="buttons">
-            <button class="button reset" name="reset">Reset</button>
-            <form class="set-new-grid">
-                <input type = "submit" class="button set" value="Set">
-                <input type="text" name="grid-dimension" placeholder="Enter grid dimension (<100)" required>
-            </form>
-        </div>
-        <div class="container"></div>
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <title>Etch-a-sketch</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+</head>
+
+<body>
+    <div class="buttons">
+
+        <input type="color" name="color-selection">
+        <input type="submit" class="button" value="choose color">
+
+        <button class="button random" name="random">random color</button>
+        <button class="button reset" name="reset">reset</button>
+        <form class="set-new-grid">
+            <input type="submit" class="button set" value="set">
+            <input type="text" name="grid-dimension" placeholder="Enter grid dimension (<100)" required>
+        </form>
+        <input type="range" class="dimension-slider" min="0" max="100" value="16" step="1">
+    </div>
+    <div class="container">
+    </div>
+</body>
+
 </html>

@@ -4,12 +4,16 @@ addEventListener('load', setGridWithDimension);
 
 let cells = Array.from(document.querySelectorAll('[data-col]'));
 
+let mouseDown = false;
+
+document.addEventListener('mousedown', () => mouseDown = true);
+document.addEventListener('mouseup', () => mouseDown = false);
+
 const setNewGrid = document.querySelector('.set-new-grid');
 setNewGrid.addEventListener('submit', setGridWithDimension);
 
 const resetBtn = document.querySelector('.reset');
 resetBtn.addEventListener('click', resetGrid);
-
 
 function resetGrid() {
     cells.forEach(cell => cell.style.background = 'white');
@@ -41,6 +45,7 @@ function setGridWithDimension(e) {
         container.appendChild(row);
     }
 
+
     cells = Array.from(document.querySelectorAll('[data-col]'));
     cells.forEach(cell => cell.addEventListener('mouseover', colorTrace));
 
@@ -58,35 +63,37 @@ function checkDimensionConstraints(str) {
     return true;
 }
 
-function colorTrace() {
-    if (!this.style.background || this.style.background == 'white') {
-        const colorRed = Math.floor(Math.random() * 256);
-        const colorGreen = Math.floor(Math.random() * 256);
-        const colorBlue = Math.floor(Math.random() * 256);
-        const alpha = Math.random();
-        this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue}, ${alpha})`;
-    }
-    else {
-        const cellRgba = this.style.background;
-        const cellRgbaValues = cellRgba.replace(/rgba\(/i, '').replace(/\)/, '').split(',');
-        cellRgbaValues.forEach((value, index) => {
-            cellRgbaValues[index] = parseFloat(value.trim());
-        })
-
-        const red = Math.round(cellRgbaValues[0]) - 0.1 * 255;
-        const colorRed = red >= 0 ? red : 0;
-        const green = Math.round(cellRgbaValues[1]) - 0.1 * 255;
-        const colorGreen = green >= 0 ? green : 0;
-        const blue = Math.round(cellRgbaValues[2]) - 0.1 * 255;
-        const colorBlue = blue >= 0 ? blue : 0;
-
-        if (cellRgbaValues.length == 3)
-            this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue})`;
-        else {
-
-            const a = cellRgbaValues[3] + 0.1;
-            const alpha = a > 1 ? 1 : a;
+function colorTrace(e) {
+    if(mouseDown){
+        if (!this.style.background || this.style.background == 'white') {
+            const colorRed = Math.floor(Math.random() * 256);
+            const colorGreen = Math.floor(Math.random() * 256);
+            const colorBlue = Math.floor(Math.random() * 256);
+            const alpha = Math.random();
             this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue}, ${alpha})`;
+        }
+        else {
+            const cellRgba = this.style.background;
+            const cellRgbaValues = cellRgba.replace(/rgba\(/i, '').replace(/\)/, '').split(',');
+            cellRgbaValues.forEach((value, index) => {
+                cellRgbaValues[index] = parseFloat(value.trim());
+            })
+
+            const red = Math.round(cellRgbaValues[0]) - 0.1 * 255;
+            const colorRed = red >= 0 ? red : 0;
+            const green = Math.round(cellRgbaValues[1]) - 0.1 * 255;
+            const colorGreen = green >= 0 ? green : 0;
+            const blue = Math.round(cellRgbaValues[2]) - 0.1 * 255;
+            const colorBlue = blue >= 0 ? blue : 0;
+
+            if (cellRgbaValues.length == 3)
+                this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue})`;
+            else {
+
+                const a = cellRgbaValues[3] + 0.1;
+                const alpha = a > 1 ? 1 : a;
+                this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue}, ${alpha})`;
+            }
         }
     }
 }
