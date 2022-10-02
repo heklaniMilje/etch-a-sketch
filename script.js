@@ -1,19 +1,32 @@
 const container = document.querySelector('.container');
-
-addEventListener('load', setGridWithDimension);
-
 let cells = Array.from(document.querySelectorAll('[data-col]'));
+const setNewGrid = document.querySelector('.set-new-grid');
+const resetBtn = document.querySelector('.reset');
+const colorSelection = document.querySelector(`[name="color-selection"]`);
+console.log(colorSelection.value);
 
 let mouseDown = false;
+let colorSingleMode = false;
+let selectedColor = [];
 
+addEventListener('load', setGridWithDimension);
 document.addEventListener('mousedown', () => mouseDown = true);
 document.addEventListener('mouseup', () => mouseDown = false);
 
-const setNewGrid = document.querySelector('.set-new-grid');
 setNewGrid.addEventListener('submit', setGridWithDimension);
-
-const resetBtn = document.querySelector('.reset');
 resetBtn.addEventListener('click', resetGrid);
+colorSelection.addEventListener('input', watch);
+
+function hexToRgb(hex) {
+    let arrHex = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    let arrRGB = [parseInt(arrHex[1], 16), parseInt(arrHex[2], 16), parseInt(arrHex[3], 16)];
+    return arrRGB;
+}
+
+function watch(e) {
+    selectedColor = hexToRgb(this.value);
+    colorSingleMode = true;
+}
 
 function resetGrid() {
     cells.forEach(cell => cell.style.background = 'white');
@@ -64,13 +77,19 @@ function checkDimensionConstraints(str) {
 }
 
 function colorTrace(e) {
-    if(mouseDown){
+    if (mouseDown) {
         if (!this.style.background || this.style.background == 'white') {
-            const colorRed = Math.floor(Math.random() * 256);
-            const colorGreen = Math.floor(Math.random() * 256);
-            const colorBlue = Math.floor(Math.random() * 256);
-            const alpha = Math.random();
-            this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue}, ${alpha})`;
+            if (colorSingleMode) {
+                const alpha = Math.random();
+                this.style.background = `rgba(${selectedColor[0]}, ${selectedColor[1]}, ${selectedColor[2]}, ${alpha})`;
+            }
+            else {
+                const colorRed = Math.floor(Math.random() * 256);
+                const colorGreen = Math.floor(Math.random() * 256);
+                const colorBlue = Math.floor(Math.random() * 256);
+                const alpha = Math.random();
+                this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue}, ${alpha})`;
+            }
         }
         else {
             const cellRgba = this.style.background;
