@@ -3,10 +3,12 @@ let cells = Array.from(document.querySelectorAll('[data-col]'));
 const setNewGrid = document.querySelector('.set-new-grid');
 const resetBtn = document.querySelector('.reset');
 const colorSelection = document.querySelector(`[name="color-selection"]`);
-console.log(colorSelection.value);
+const eraserBtn = document.querySelector('.eraser');
+console.log(eraserBtn);
 
 let mouseDown = false;
 let colorSingleMode = false;
+let colorEraseMode = false;
 let selectedColor = [];
 
 addEventListener('load', setGridWithDimension);
@@ -15,7 +17,8 @@ document.addEventListener('mouseup', () => mouseDown = false);
 
 setNewGrid.addEventListener('submit', setGridWithDimension);
 resetBtn.addEventListener('click', resetGrid);
-colorSelection.addEventListener('input', watch);
+eraserBtn.addEventListener('click', whiteColorSelection);
+colorSelection.addEventListener('input', singleColorSelection);
 
 function hexToRgb(hex) {
     let arrHex = /^#([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -23,9 +26,17 @@ function hexToRgb(hex) {
     return arrRGB;
 }
 
-function watch(e) {
+function singleColorSelection(e) {
     selectedColor = hexToRgb(this.value);
     colorSingleMode = true;
+    colorEraseMode = false;
+}
+
+function whiteColorSelection() {
+    colorEraseMode = true;
+    colorSingleMode = false;
+    selectedColor = [255, 255, 255];
+    
 }
 
 function resetGrid() {
@@ -83,6 +94,9 @@ function colorTrace(e) {
                 const alpha = Math.random();
                 this.style.background = `rgba(${selectedColor[0]}, ${selectedColor[1]}, ${selectedColor[2]}, ${alpha})`;
             }
+            else if(colorEraseMode){
+                this.style.background = `rgba(${selectedColor[0]}, ${selectedColor[1]}, ${selectedColor[2]}, 1)`;
+            }
             else {
                 const colorRed = Math.floor(Math.random() * 256);
                 const colorGreen = Math.floor(Math.random() * 256);
@@ -92,26 +106,31 @@ function colorTrace(e) {
             }
         }
         else {
-            const cellRgba = this.style.background;
-            const cellRgbaValues = cellRgba.replace(/rgba\(/i, '').replace(/\)/, '').split(',');
-            cellRgbaValues.forEach((value, index) => {
-                cellRgbaValues[index] = parseFloat(value.trim());
-            })
-
-            const red = Math.round(cellRgbaValues[0]) - 0.1 * 255;
-            const colorRed = red >= 0 ? red : 0;
-            const green = Math.round(cellRgbaValues[1]) - 0.1 * 255;
-            const colorGreen = green >= 0 ? green : 0;
-            const blue = Math.round(cellRgbaValues[2]) - 0.1 * 255;
-            const colorBlue = blue >= 0 ? blue : 0;
-
-            if (cellRgbaValues.length == 3)
-                this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue})`;
+            if (colorEraseMode) {
+                this.style.background = `rgba(${selectedColor[0]}, ${selectedColor[1]}, ${selectedColor[2]}, 1)`;
+            }
             else {
+                const cellRgba = this.style.background;
+                const cellRgbaValues = cellRgba.replace(/rgba\(/i, '').replace(/\)/, '').split(',');
+                cellRgbaValues.forEach((value, index) => {
+                    cellRgbaValues[index] = parseFloat(value.trim());
+                })
 
-                const a = cellRgbaValues[3] + 0.1;
-                const alpha = a > 1 ? 1 : a;
-                this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue}, ${alpha})`;
+                const red = Math.round(cellRgbaValues[0]) - 0.1 * 255;
+                const colorRed = red >= 0 ? red : 0;
+                const green = Math.round(cellRgbaValues[1]) - 0.1 * 255;
+                const colorGreen = green >= 0 ? green : 0;
+                const blue = Math.round(cellRgbaValues[2]) - 0.1 * 255;
+                const colorBlue = blue >= 0 ? blue : 0;
+
+                if (cellRgbaValues.length == 3)
+                    this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue})`;
+                else {
+
+                    const a = cellRgbaValues[3] + 0.1;
+                    const alpha = a > 1 ? 1 : a;
+                    this.style.background = `rgba(${colorRed}, ${colorGreen}, ${colorBlue}, ${alpha})`;
+                }
             }
         }
     }
