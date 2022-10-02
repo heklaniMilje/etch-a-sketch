@@ -2,6 +2,7 @@
     --background-color: rgb(219, 211, 211);
     --grid-color: rgba(177, 177, 177, 0.589);
     --background-options: rgb(148, 141, 141);
+    --background-options2: rgba(218, 204, 204, 0.719);
     --options-shadow: rgba(73, 70, 70, 0.726);
 }
 
@@ -29,16 +30,15 @@ body {
 
 .buttons {
     height: 100%;
-    width: 20vw;
-    /* border: 2px solid rgb(43, 38, 38); */
-    background: var(--background-options);
+    width: 22vw;
+    background: linear-gradient(135deg, var(--background-options), var(--background-options2));
+    backdrop-filter: blur;
     border-radius: 2%;
-    box-shadow: 0 10px 5px var(--options-shadow);
+    box-shadow: 5px 5px 10px var(--options-shadow), -5px -5px 10px var(--options-shadow);
     position: absolute;
     left: 0;
-    /* transform: translateX(-90%); */
+    transform: translateX(-92%);
     transition: all .3s;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -93,6 +93,7 @@ input[type=range]::-moz-range-track {
     box-shadow: 3px 3px 6px white, -3px -3px 6px white;
     cursor: pointer;
 }
+
 input[type=range]::-moz-range-thumb {
     height: 15px;
     width: 15px;
@@ -100,6 +101,7 @@ input[type=range]::-moz-range-thumb {
     background: rgb(255, 255, 255);
     margin-top: -3px;
 }
+
 .button {
     width: 80%;
     height: 6%;
